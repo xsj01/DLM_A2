@@ -1,0 +1,103 @@
+defaults:
+  - config
+
+hydra:
+  run:
+    dir: ${root_dir}
+
+env: 'PilePush'
+gpu: True
+stage: 'dy'
+pstep: 2
+random_seed: 42
+time_step: 0
+dt: 0.01666666666667
+n_instance: 2
+n_particle_pusher: 10
+nf_relation: 150
+nf_particle: 150
+nf_pos: 150
+nf_memory: 150
+mem_nlayer: 2
+nf_effect: 150
+outf: 'files'
+evalf: 'eval'
+dataf: 'data'
+eval: 0
+verbose_data: 0
+verbose_model: 0
+eps: 1e-6
+neighbor_radius: 0.05
+neighbor_k: 20
+n_his: 2
+sequence_length: 16
+shape_state_dim: 6
+attr_dim: 2
+state_dim: 3
+relation_dim: 1
+physics_param_range: None
+vis_width: 160
+vis_height: 120
+n_rollout: 0
+train_valid_ratio: 0.9
+num_workers: 10
+log_per_iter: 50
+ckp_per_iter: 1000
+n_epoch: 100
+beta1: 0.9
+lr: 1e-2
+imbalance_ratio: 0.05
+optimizer: 'Adam'
+max_grad_norm: 1.0
+batch_size: 256
+gen_data: 0
+gen_stat: 0
+gen_vision: 0
+resume: 0
+resume_epoch: -1
+resume_iter: -1
+augment_ratio: 0.
+eval_epoch: -1
+eval_iter: -1
+eval_set: 'demo'
+pyflex: 1
+vispy: 1
+
+
+data_dir: ${root_dir}/data/  # where to store dataset
+assets_root: ${root_dir}/cliport/environments/assets/
+down_sample: 5
+pusher_field_dir: ${assets_root}/ur5/spatula/
+pusher_field: spatula-rasterization.npy
+zone_field: '${assets_root}/zone/zone-rasterization-sdf.npy'
+disp: False  # visualize PyBullet
+shared_memory: False
+task: sweeping-piles #packing-boxes-pairs-seen-colors
+mode: train # 'train' or 'val' or 'test'
+# gpu: [0]
+log_dir: ${root_dir}/saved/log/
+# resume: False
+bounds: [[0.25, 0.75], [-0.5, 0.5], [0, 0.28]]
+pix_size: 0.003125
+sampler_margin: 0.05
+agent_margin: 0.05
+
+
+train:
+  model: "Toy"
+  task_mode: "Push"
+  save_period: False
+  save_dir: ${root_dir}/ckpt/
+  run_id: False
+  dataset: False
+  comments: False
+  base_comments: lr${train.lr}_bs${batch_size}_seed${train.seed}
+  early_stop: 20
+  save_optim: False
+  save_info: True
+  data_cache: False
+  seed: 10
+  epochs: ${n_epoch}
+  batch_size: ${batch_size}
+  lr: ${lr}
+  imbalance_ratio: ${imbalance_ratio}

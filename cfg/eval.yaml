@@ -1,0 +1,103 @@
+# Evaluation
+
+defaults:
+  - config
+
+hydra:
+  run:
+    dir: ${root_dir}
+  sweep:
+    dir: ${root_dir}
+    subdir: ''
+
+data_dir: ${root_dir}/data/  # where to store dataset
+assets_root: ${root_dir}/cliport/environments/assets/
+disp: False  # visualize PyBullet
+shared_memory: False
+sim_enableGPU: True
+task: sweeping-piles #packing-boxes-pairs-seen-colors
+mode: test # 'train' or 'val' or 'test'
+
+env:
+  enableGPU: ${sim_enableGPU}
+  object_case: "toy"
+  object_case_args: False
+  pusher_case: False
+  goal_case: "ring"
+  goal_case_args: ${num_target}
+  transparent: False
+  # obstacle: True
+  pusher: "cylinder"
+  data_gen: False
+
+# prediction config
+down_sample: 5
+
+# planning config
+seed: 10
+gpu: [0]
+save_data: True
+save_demo_result: False
+save_iter: True
+max_steps: 5
+n_sample: 256
+n_opt: 4
+n_iter: 30
+gamma: 0.01
+cost_power: 1
+pusher_field_dir: ${assets_root}/ur5/spatula/
+pusher_field: spatula-rasterization.npy
+# pusher_field: ${assets_root}/ur5/spatula/spatula-long-rasterization.npy
+# pusher_field: ${assets_root}/ur5/spatula/spatula-short-rasterization.npy
+zone_field: '${assets_root}/zone/zone-rasterization-sdf.npy'
+save_dir: ${root_dir}/results//
+sampler: Base
+d_range: [0.2, 0.8]
+c_range: [0., 0.5]
+agent: False
+agent_type: "shoot"
+agent_comments: False
+comments: False
+max_retry: 1
+save_source: False
+# evaluation
+test_idx: False
+N: 20
+# model_name: fcnrender_bn_1k_ms
+# model_path: ${root_dir}/saved/models/${model_name}/model_best.pt
+model: "mlp"
+task_mode: "Push"
+model_name: ${model}_${task_mode}
+model_path: ${root_dir}/ckpt/${model}/model_best.pt
+run_id: ${model}
+log_dir: ${root_dir}/saved/log/
+training: False
+save_info: True
+num_workers: 2
+horizon: 16
+use_im: False
+allow_no_update: False
+bs: 1
+bounds: [[0.25, 0.75], [-0.5, 0.5], [0, 0.28]]
+pix_size: 0.003125
+sampler_margin: 0.05
+agent_margin: 0.025
+# set_model: False
+neighbor_radius: 0.05
+verbose: False
+num_target: 1
+
+dataset:
+  type: 'single' # 'single' or 'multi'
+  images: True
+  cache: True # load episodes to memory instead of reading from disk
+  augment:
+    theta_sigma: 60 
+
+record:
+  save_video: False
+  save_video_path: ${data_dir}/${task}-${mode}/videos/
+  add_text: False
+  fps: 20
+  video_height: 640
+  video_width: 720
