@@ -182,8 +182,8 @@ def train(model, cfg, name='mlp'):
     # print(len(training_set), len(testing_set))
 
     batch_size = cfg.batch_size
-    train_dataloader = DataLoader(training_set, batch_size=batch_size, shuffle=True, num_workers=8, pin_memory=False, persistent_workers=True)
-    val_dataloader = DataLoader(testing_set, batch_size=256, shuffle=False, num_workers=4, persistent_workers=True)
+    train_dataloader = DataLoader(training_set, batch_size=batch_size, shuffle=True, num_workers=2, pin_memory=False, persistent_workers=True)
+    val_dataloader = DataLoader(testing_set, batch_size=256, shuffle=False, num_workers=2, persistent_workers=True)
     dataloader = {'train':train_dataloader, 'val':val_dataloader}
 
     # loss = torch.nn.L1Loss()
