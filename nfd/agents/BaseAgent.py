@@ -24,8 +24,8 @@ import re
 import inspect
 
 # from nfd.models.model import 
-import nfd.models
-sys.path.append(os.path.dirname(nfd.models.__file__))
+# import nfd.models
+# sys.path.append(os.path.dirname(nfd.models.__file__))
 # from nfd.models.prediction import Prediction
 # model.TransitionFCN = model.FCN
 from datetime import datetime
