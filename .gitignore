@@ -7,7 +7,7 @@ jobs/
 videos/
 checkpoints/
 # data
-results
+/results/
 dist/
 log/
 saved/
@@ -18,6 +18,7 @@ cliport.egg-info/
 cliport_quickstart/*
 .hydra/
 /exps/
+/ckpt/
 
 # Large Asserts
 cliport/environments/assets/google/
