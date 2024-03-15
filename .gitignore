@@ -6,7 +6,7 @@ cliport/jobs/
 jobs/
 videos/
 checkpoints/
-data
+# data
 results
 dist/
 log/
