@@ -19,10 +19,9 @@ torch
 torchvision
 transformers
 transforms3d
-wandb==0.10.15
+wandb
 Munch
 numba
-GPUtil
 pandas
 tensorboard
 thop
