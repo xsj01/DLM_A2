@@ -33,8 +33,8 @@ from nfd.agents.BaseAgent import BaseAgent
 # from nfd.agents.SplitAgent import SplitAgent, SpreadAgent
 # from nfd.agents.ObjectCentricAgent import ObjectCentricAgent
 # from nfd.toy.agent_toy import ToyShootAgent, ToyOptAgent
-from nfd.utils.renderer import render_field
-from nfd.gen_data import gen_target_list
+# from nfd.utils.renderer import render_field
+# from nfd.gen_data import gen_target_list
 from nfd.utils.planning_utils import gen_action_list
 import matplotlib.pyplot as plt
 import pickle as pkl
