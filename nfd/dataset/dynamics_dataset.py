@@ -304,15 +304,15 @@ class DynamicsDataset(PushDataset):
         transform = self.transform
         if self.cache and self.data_list[idx]:#and len(self.data_list)==len(self):
             data = self.data_list[idx]
-            states = data['states']
+            # states = data['states']
             # actions = data['action_img']
             object_poses = data['object_poses']
             poses = get_pose(data['action'])
         else:
             data = load_data(self.file_list[idx])
-            color = torch.tensor(np.array(data['color']))
+            # color = torch.tensor(np.array(data['color']))
             # import pdb; pdb.set_trace()
-            states = get_state(color)
+            # states = get_state(color)
     
             # actions = get_action(color)
 
@@ -320,14 +320,14 @@ class DynamicsDataset(PushDataset):
 
             poses = get_pose(data['action'])
 
-            if transform:
-                states = transform(states)
+            # if transform:
+            #     states = transform(states)
             #     actions = transform(actions)
 
             if self.cache:
                 data.pop('color', None)
                 data.pop('states', None)
-                data['states'] = states
+                # data['states'] = states
                 # data['action_img'] = actions
                 data['object_poses'] = object_poses
                 # self.data_list.append(data)
@@ -338,7 +338,7 @@ class DynamicsDataset(PushDataset):
 
         if self.seq_length is not None:
             idx_list = sample_idx(poses.shape[0], self.seq_length)
-            states = states[idx_list,...]
+            # states = states[idx_list,...]
             # actions = actions[idx_list,...]
             poses = poses[idx_list,...]
             object_poses = object_poses[idx_list,...]
@@ -346,7 +346,8 @@ class DynamicsDataset(PushDataset):
         
         # output = {"state":states, "object_poses":object_poses, "pose": poses, "dpi": convert2dpi(states, object_poses, poses, self.cfg)}
         # output = {"state":states, "object_pose":object_poses, "pose": poses, "dpi": convert2dpi(object_poses, poses, self.cfg)}
-        output = {"state":states, "object_pose":object_poses, "pose": poses, 'idx':torch.tensor([idx])} #, "state":states, }
+        # output = {"state":states, "object_pose":object_poses, "pose": poses, 'idx':torch.tensor([idx])} #, "state":states, }
+        output = {"object_pose":object_poses, "pose": poses, 'idx':torch.tensor([idx])}
         return output
 
 

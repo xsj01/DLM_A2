@@ -29,5 +29,4 @@ thop
 gtsam
 ipykernel
 moviepy
-protobuf==3.20
 h5py
