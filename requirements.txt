@@ -6,10 +6,10 @@ imageio==2.9.0
 imageio-ffmpeg==0.4.5
 kornia==0.4.1
 matplotlib
-meshcat==0.0.18
+meshcat
 numpy
 opencv-python>=4.1.2.30
-pybullet==3.0.4
+pybullet
 pytorch_lightning
 regex
 scikit-image>=0.17.2
