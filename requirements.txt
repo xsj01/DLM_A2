@@ -1,14 +1,13 @@
 # absl-py==0.7.0
 ftfy
-gdown
-gym==0.17.3
+gym
 hydra-core==1.0.5
 imageio==2.9.0
 imageio-ffmpeg==0.4.5
 kornia==0.4.1
 matplotlib
 meshcat==0.0.18
-numpy<=1.23.4
+numpy
 opencv-python>=4.1.2.30
 pybullet==3.0.4
 pytorch_lightning
