@@ -156,7 +156,10 @@ class Trainer(Base):
         return [tracker.avg(m.__name__+f'/{i}') for m in self.metric_ftns for i in ['single', 'multi']]
     
 def balanced_loss(predict, gt_pred, gt_past, loss_fn, weight=0.05):
-
+    '''
+    The parameter cfg.imbalance_ratio indicates the weight apply to the 'failure' cases (pusher not interacting with the object)
+    while computing the loss function, 0 means ignore the failure case, 1 means failure cases has the same weights as the other cases,
+    '''
     with torch.no_grad():
         diff = (gt_pred - gt_past).norm(dim=-1)
         mask = torch.where(diff==0., torch.zeros_like(diff), torch.ones_like(diff)).unsqueeze(-1)
@@ -172,9 +175,9 @@ def train(model, cfg, name='mlp'):
         utils.set_seed(cfg.train.seed)
     
     train_filter, test_filter=None, None
-    cache = False
+    cache = cfg.train.data_cache
     overfit = None#[2]#list(range(10))
-    # overfit = [2]
+
     training_set = DynamicsDataset(mode='train',index_max = None, name_filter=train_filter, shuffle=False, seq_length = 17, data_dir=cfg.data_dir, cache = cache, cfg = cfg, overfit=overfit)
     testing_set = DynamicsDataset(mode='val', index_max = None, name_filter=test_filter, shuffle=False, seq_length=17, data_dir=cfg.data_dir, cache=cache, cfg = cfg, overfit=overfit)
     
@@ -193,15 +196,9 @@ def train(model, cfg, name='mlp'):
     met = torch.nn.L1Loss()
     met.__name__ = 'Error'
 
-    # dataloader = DataLoader(training_set, batch_size=3, shuffle=True, num_workers=1, collate_fn=my_collate_all)
-    # model = DynamicsPrediction(cfg)
-
 
     optim = torch.optim.Adam(model.parameters(), lr=cfg.lr)
     
-    # scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optim, factor=0.3)
-    # scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optim, 'min', factor=0.8, patience=3, verbose=True)
-
     if not name:
         name = datetime.now().strftime(r'%m%d_%H%M%S')
     
@@ -229,9 +226,7 @@ def tsplot(data, x=None, **kwargs):
     kwargs.pop('label')
     plt.fill_between(x, mean-std, mean+std, alpha=0.2, **kwargs)
 
-    # plt.plot(x, np.quantile(data, 0.5, axis=0), **kwargs)
-    # plt.fill_between(x, np.quantile(data, 0.9, axis=0), np.quantile(data, 0.1, axis=0), alpha=0.2, **kwargs)
-
+   
 def display_gif(gif_path):
     
     b64 = base64.b64encode(open(gif_path,'rb').read()).decode('ascii')

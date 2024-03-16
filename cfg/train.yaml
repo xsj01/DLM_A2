@@ -95,7 +95,7 @@ train:
   early_stop: 20
   save_optim: False
   save_info: True
-  data_cache: False
+  data_cache: True
   seed: 10
   epochs: ${n_epoch}
   batch_size: ${batch_size}
